@@ -198,7 +198,7 @@ function adaptive_image_preprocess_image(&$variables) {
       }
 
       // Add class for styling
-      $variables['attributes']['class'] = 'adaptive-image';
+      $variables['attributes']['class'][] = 'adaptive-image';
 
       // Remove fixed image dimensions
       unset($variables['height']);
