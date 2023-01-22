@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Adaptive Image - Adaptive images for Drupal
+ * Adaptive Image - Adaptive images for Backdrop
  * @see http://adaptive-images.com/
  *
  * @author
@@ -10,7 +10,7 @@
  */
 
 /**
- * Implements hook_init().
+ * Implements hook_init().().
  */
 function adaptive_image_init() {
   // According to the documentation of hook_init() it should not be used to
@@ -18,22 +18,22 @@ function adaptive_image_init() {
   // here by intention, as we want it inline to prevent wait time while loading
   // the script
 
-  // No need for drupal behaviours, jquery compatibility wrapper nor ready event
+  // No need for backdrop behaviours, jquery compatibility wrapper nor ready event
   $js = "document.cookie = 'adaptive_image=' + Math.max(screen.width, screen.height) + '; path=/';";
-  drupal_add_js($js,
+  backdrop_add_js($js, 
     // First-come, first-served
     array(
-      'type' => 'inline',
-      'scope' => 'header',
-      'group' => JS_LIBRARY,
-      'every_page' => TRUE,
-      'weight' => -500,
-    )
+    'type' => 'inline',
+    'scope' => 'header',
+    'group' => JS_LIBRARY,
+    'every_page' => TRUE,
+    'weight' => -500,
+  )
   );
 }
 
 /**
- * Implements hook_menu().
+ * Implements hook_menu().().
  */
 function adaptive_image_menu() {
   $items = array();
@@ -65,7 +65,7 @@ function adaptive_image_menu() {
 }
 
 /**
- * Implements hook_image_effect_info().
+ * Implements hook_image_effect_info().().
  */
 function adaptive_image_image_effect_info() {
   $effects = array();
@@ -108,14 +108,23 @@ function adaptive_image_scale_form($data) {
   $resolutions = explode(',', str_replace(' ', '', $form['resolutions']['#default_value']));
   $resolution = adaptive_image_resolution($resolutions);
   // Provide needed defaults
-  $form['height']  = array('#type' => 'hidden','#default_value' => NULL);
-  $form['width']   = array('#type' => 'hidden','#default_value' => $resolution);
-  $form['upscale'] = array('#type' => 'hidden','#default_value' => NULL);
+  $form['height']  = array(
+    '#type' => 'hidden',
+    '#default_value' => NULL,
+  );
+  $form['width']   = array(
+    '#type' => 'hidden',
+    '#default_value' => $resolution,
+  );
+  $form['upscale'] = array(
+    '#type' => 'hidden',
+    '#default_value' => NULL,
+  );
   return $form;
 }
 
 /**
- * Implements hook_theme().
+ * Implements hook_theme().().
  */
 function adaptive_image_theme() {
   return array(
@@ -145,8 +154,8 @@ function theme_adaptive_image_scale_summary($variables) {
  * Validate Input of Resolutions-Field
  */
 function adaptive_image_form_image_effect_form_alter(&$form, &$form_state, $form_id) {
-  if(strpos($form['#action'], 'adaptive_image')) {
-  $form['#validate'] = array('_adaptive_image_form_image_effect_form_validate');
+  if (strpos($form['#action'], 'adaptive_image')) {
+    $form['#validate'] = array('_adaptive_image_form_image_effect_form_validate');
   }
 }
 
@@ -155,12 +164,12 @@ function adaptive_image_form_image_effect_form_alter(&$form, &$form_state, $form
  */
 function _adaptive_image_form_image_effect_form_validate($form, &$form_state) {
   $resolutions = explode(',', $form['data']['resolutions']['#value']);
-  foreach($resolutions as $width) {
+  foreach ($resolutions as $width) {
     $width = trim($width, ' ');
-    if(!is_numeric($width)) {
+    if (!is_numeric($width)) {
       form_set_error('resolutions', t("Values have to be seperated by comma. For example: 1382, 992, 768, 480"));
     }
-  } 
+  }
 }
 
 /**
@@ -251,7 +260,8 @@ function adaptive_image_resolution($resolutions) {
           $resolution = $break_point;
         }
       }
-    } else {
+    }
+    else {
       setcookie("adaptive_image", "", time() -1); // delete the mangled cookie
     }
   }
