@@ -246,7 +246,7 @@ function adaptive_image_resolution($resolutions) {
               }
             }
             // now apply the multiplier
-            $resolution = $resolution * pixel_density;
+            $resolution = $resolution * $pixel_density;
           }
           // the required image fits into the existing breakpoints in $resolutions
           else {
