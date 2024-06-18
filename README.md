@@ -31,7 +31,7 @@ INSTALLATION
 MAINTAINERS
 -----------
 
-- seeking maintainers
+- [drybro](https://github.com/drybro/)
 
 
 CREDITS
