@@ -149,7 +149,7 @@ function theme_adaptive_image_scale_summary($variables) {
 function adaptive_image_preprocess_image(&$variables) {
   global $base_url;
 
-  if (isset($variables['style_name'])) {
+  if (isset($variables['style_name']) && isset($variables['path'])) {
     // Get image style settings
     $style = image_style_load($variables['style_name']);
 
