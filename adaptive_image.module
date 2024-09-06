@@ -19,7 +19,7 @@ function adaptive_image_init() {
   // the script
 
   // No need for backdrop behaviours, jquery compatibility wrapper nor ready event
- $js = "document.cookie='adaptive_image='+Math.max(screen.width,screen.height)+('devicePixelRatio' in window ? ','+devicePixelRatio : ',1')+'; path=/';";
+  $js = "document.cookie='adaptive_image='+Math.max(screen.width,screen.height)+('devicePixelRatio' in window ? ','+devicePixelRatio : ',1')+'; path=/; SameSite=Lax;'";
   backdrop_add_js($js,
     // First-come, first-served
     array(
